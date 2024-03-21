@@ -1,15 +1,22 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './styles.css'
 import Navbar from './components/Navbar'
+import UserList from './components/UserList';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user,SetUser] = useState();
+  const list = [{username: 'someuser'}, {username:'someuser2'}]
+
+  useEffect(()=>{
+    //GET fetch for our user 
+  }, [])
 
   return (
-    <>
+    <div>
       <Navbar></Navbar>
       <div className='text-3xl'>Home</div>
-    </>
+      <UserList title='working' list={list}></UserList>
+    </div>
   )
 }
 

@@ -4,10 +4,10 @@ import logoutIcon from '../assets/logout.svg'
 
 export default function Navbar(){
     return(
-        <div className='flex justify-around p-7 bg-purple-100 shadow-md'>
+        <div className='flex justify-around p-7 bg-purple-100 shadow-lg'>
             <a href="/"><img src={homeIcon} className='h-16' alt="homeIcon" /></a>
             <a href="/messages"><img src={messageIcon} alt='messageIcon' className='h-16'/></a>
-            <img src={logoutIcon} alt="logoutIcon" className='h-16' />
+            <a href="/login"><img src={logoutIcon} alt="logoutIcon" className='h-16' /></a>
         </div>
     )
 }
