@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <div className='text-xl'>working</div>
+      <div className='text-xl'>Home</div>
     </>
   )
 }
