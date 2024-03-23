@@ -11,11 +11,34 @@ export default function Login(){
     }
 
     const handleSubmit = (e) => {
-        //POST fetch
         e.preventDefault();
+        const username = e.target.username.value
+        const password = e.target.password.value
+        const data = {
+            username: username,
+            password: password
+        }
+
+        if(login){
+            console.log('login')
+        }else{
+            fetch('http://localhost:3000/login',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+                credentials: 'include'
+            })
+            .then(result => result.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+        }
+        //POST fetch
 
         //Will reroute in Fetch
-        window.location.href = "/"
+       // window.location.href = "/"
+
     }
 
 

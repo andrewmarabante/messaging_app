@@ -10,17 +10,14 @@ const userSchema = new Schema({
         type : String,
         required : true
     },
-    profilePic : {
-        type : Image,
-        required : true
+    imageURL : {
+        type : String,
     },
     online : {
         type : Boolean,
-        required : true
     },
     friends : {
         type : Array,
-        required : true
     }
 })
 
