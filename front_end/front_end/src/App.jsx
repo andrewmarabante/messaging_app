@@ -4,8 +4,7 @@ import Navbar from './components/Navbar'
 import UserList from './components/UserList';
 
 function App() {
-  const [user,SetUser] = useState();
-  const list = [{username: 'someuser'}, {username:'someuser2'}]
+  const [user,SetUser] = useState(null);
 
   useEffect(()=>{
     //GET fetch for our user 
@@ -17,15 +16,20 @@ function App() {
       credentials: 'include'
   })
   .then(result => result.json())
-  .then(data => console.log(data))
+  .then(user => SetUser(user))
   .catch(err => console.log(err))
   }, [])
 
   return (
     <div>
       <Navbar></Navbar>
-      <div className='text-3xl'>Home</div>
-      <UserList title='working' list={list}></UserList>
+      {user && <div className='text-3xl pt-6 pl-5'>Welcome, <span className='font-light'>{user.username.toUpperCase()}</span></div>}
+      <div className='flex justify-center items-center h-screen'>
+        <div className="h-3/4 bg-blue-50 rounded-lg w-3/4 shadow-2xl relative mt-5 flex justify-around items-center">
+          <UserList title='Friends:' type='friends'></UserList>
+          <UserList title='Suggested:' type='suggested'></UserList>
+        </div>
+      </div>
     </div>
   )
 }

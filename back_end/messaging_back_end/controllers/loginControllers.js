@@ -33,7 +33,7 @@ const loginUser = (req,res) => {
         if(!match){
             res.json('Wrong Password!')
         }else{
-            const token = auth.jwt.sign({userId : user._id}, process.env.SECRET);
+            const token = auth.jwt.sign({userId : user[0]._id , friends : user[0].friends}, process.env.SECRET);
             res.cookie('jwt', token, { httpOnly: true, path: '/'});
             res.json('success')  
         }}
