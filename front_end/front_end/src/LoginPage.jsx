@@ -20,9 +20,19 @@ export default function Login(){
         }
 
         if(login){
-            console.log('login')
-        }else{
             fetch('http://localhost:3000/login',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+                credentials: 'include'
+            })
+            .then(result => result.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+        }else{
+            fetch('http://localhost:3000/login/signup',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

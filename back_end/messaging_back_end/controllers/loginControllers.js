@@ -20,6 +20,29 @@ const newUser = async (req, res) => {
     .catch(err => console.log(err))
 }
 
+const loginUser = (req,res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    User.find({username : username})
+    .then(async (user) => {
+        if(user.length === 0){
+            res.json('Wrong Username')
+        }else{
+        const hashedPass = user[0].password
+        const match = await auth.bcrypt.compare(password, hashedPass);
+        if(!match){
+            res.json('Wrong Password!')
+        }else{
+            const token = auth.jwt.sign({userId : user._id}, process.env.SECRET);
+            res.cookie('jwt', token, { httpOnly: true, path: '/'});
+            res.json('success')  
+        }}
+    })
+    .catch(err => res.json('Error'))
+
+}
+
 module.exports = {
-    newUser
+    newUser,
+    loginUser
 }
