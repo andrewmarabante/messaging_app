@@ -9,6 +9,16 @@ function App() {
 
   useEffect(()=>{
     //GET fetch for our user 
+    fetch('http://localhost:3000/',{
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+  })
+  .then(result => result.json())
+  .then(data => console.log(data))
+  .catch(err => console.log(err))
   }, [])
 
   return (

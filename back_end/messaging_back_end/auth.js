@@ -5,25 +5,18 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('./models/user')
 
-// const jwtOptions = {
-//     jwtFromRequest: ExtractJwt.fromCookie('jwt')  ,
-//     secretOrKey: process.env.SECRET
-//   };
-
-//   passport.use(new JwtStrategy(jwtOptions, async (payload, done) => {
-//     try{
-//         const user = await User.findById(payload.sub);
-//         if(user){
-//             done(null, user);
-//         }else{
-//             done (null, false)
-//         }
-//     }catch (err){
-//         done(err, false)
-//     }
-//   }));
+function authenticateToken(req,res,next){
+    const token = req.cookies.jwt
+    if (token == null){return res.sendStatus(401)}
+    jwt.verify(token, process.env.SECRET, (err, user) => {
+        if(err){return res.sendStatus(403)}
+        req.user = user
+        next()
+    })
+}
   
   module.exports = {
     bcrypt,
-    jwt
+    jwt,
+    authenticateToken
   }
