@@ -32,8 +32,8 @@ const loginUser = (req,res) => {
         const match = await auth.bcrypt.compare(password, hashedPass);
         if(!match){
             res.json('Wrong Password!')
-        }else{
-            const token = auth.jwt.sign({userId : user[0]._id , friends : user[0].friends}, process.env.SECRET);
+        }else{f
+            const token = auth.jwt.sign({userId : user[0]._id}, process.env.SECRET);
             res.cookie('jwt', token, { httpOnly: true, path: '/'});
             res.json('success')  
         }}
