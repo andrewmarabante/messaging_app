@@ -3,7 +3,7 @@ import { v4 } from "uuid"
 import trashCan from '../assets/trash.svg'
 import plus from '../assets/plus.svg'
 
-export default function UserList({ title, type, reset, triggerReset }) {
+export default function UserList({ title, type, reset, triggerReset, addChat}) {
     const [friends, setFriends] = useState([]);
     const [suggested, setSuggested] = useState([]);
 
@@ -68,14 +68,16 @@ export default function UserList({ title, type, reset, triggerReset }) {
             .catch(err => console.log(err))
     }
 
+
     return (
-        <div className="w-1/4 bg-white rounded-lg h-3/4 text-center shadow-2xl">
+        <div className={`bg-white rounded-lg h-3/4 text-center ${type === 'chat' ? 'w-1/2' : 'w-1/3 shadow-2xl'}`}>
             <h2 className="text-2xl pt-4 pb-4 border-b text-black shadow-sm">{title}</h2>
 
-            {type === 'friends' && <div>{friends.map((friend)=>{
+            {(type === 'friends' || type === 'chat') && <div className={`overflow-scroll ${type === 'chat' && 'max-h-60'}`}>{friends.map((friend)=>{
                 return(
                     <div key={v4()} className=" text-black shadow-sm font-mono text-md p-2 flex justify-between">
                         <div className="">{friend.username}</div>
+                        {type === 'chat' && <img src={plus} alt="plus" className="h-5" onClick={()=>{addChat(friend)}}/>}
                         {type==='friends' && <img src={trashCan} alt="delete" className="h-4 fill-red-500 text-red-500" onClick={()=>{deleteFriend(friend._id)}}/>} 
                         {type === 'suggested' && <img src={plus} alt="plus" className="h-5" onClick={()=>{addFriend(friend._id)}}/>}
                     </div>

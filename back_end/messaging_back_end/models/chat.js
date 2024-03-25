@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const chatSchema = new Schema({
     chat_name : {
         type : String,
-        required : true
     },
     users : {
         type : Array,
