@@ -10,7 +10,7 @@ export default function NewChat({toggleNewMessage, createChat}){
     const [chatNames, setChatNames] = useState([])
     const [chatIds, setChatIds] = useState([]);
     const [groupName, setGroupName] = useState('Group Name')
-    const [reset, setReset] = useState(null)
+    const [reset, setReset] = useState(null);
 
     function addChat(friend){
         if(!chatIds.includes(friend._id)){

@@ -3,10 +3,14 @@ import Navbar from "./components/Navbar"
 import newMessage from "./assets/newMessage.svg"
 import ChatList from "./components/ChatList"
 import NewChat from "./components/NewChat"
+import LoadChat from "./components/LoadChat"
 
 export default function Messages(){
 
     const [newChat,setNewChat] = useState(false)
+    const [showChat, setShowChat] = useState(false)
+    const [currentChat, setCurrentChat] = useState(null);
+
     useEffect(() => {
         //GET fetch 
     }, [])
@@ -48,21 +52,33 @@ export default function Messages(){
             .catch(err => console.log(err))
     }
 
+    function enterChat(chatId){
+        setCurrentChat(chatId);
+        setShowChat(true);
+    }
+
+    function toggleLoadChat(){
+        setCurrentChat(null)
+        setShowChat(false)
+    }
+
     return(
     <div>
         <Navbar></Navbar>
         <div className="flex justify-center items-center h-screen">
             <div className="h-4/5 bg-blue-50 rounded-lg w-3/4 shadow-2xl relative flex justify-center items-center flex-col">
 
-                    {!newChat && <>
+                    {!newChat && !showChat && <>
                     <div className="text-center p-5 text-5xl select-none">Messages</div>
-                    <ChatList></ChatList>
+                    <ChatList enterChat = {enterChat}></ChatList>
                     <div onClick={addNewChat} className="absolute right-10 bottom-10 h-15 bg-white p-4 flex justify-center items-center rounded-full shadow-lg border text-black">
                         <img src={newMessage} className="h-10"></img>
                     </div>
                     </>}
 
-                    {newChat && <NewChat toggleNewMessage={toggleNewMessage} createChat={createChat} ></NewChat>} 
+                    {newChat && !showChat && <NewChat toggleNewMessage={toggleNewMessage} createChat={createChat} ></NewChat>} 
+
+                    {showChat && <LoadChat chatId = {currentChat} toggleLoadChat = {toggleLoadChat}></LoadChat>}
             </div>
         </div>
     </div>

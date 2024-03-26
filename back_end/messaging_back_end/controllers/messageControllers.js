@@ -1,7 +1,7 @@
 const User = require("../models/user")
 const Message = require('../models/message')
 const Chat = require('../models/chat')
-const { modelNames } = require("mongoose")
+
 
 function getChats(req,res){
     userId = req.userInfo.userId;
@@ -55,7 +55,29 @@ function newChat(req,res){
     }
 }
 
+function getMessages(req,res){
+    console.log('params:')
+    console.log(req.params.id)
+    res.json()
+}
+
+function newMessage(req,res){
+    messageDetails = {
+        chat_id : req.params.id,
+        sender : req.userInfo.userId
+    }
+
+     const newMessage = new Message(messageDetails);
+
+     newMessage.save()
+     .then(res.json('saved'))
+     .catch(err => res.status(500).json(err))
+
+}
+
 module.exports = {
     getChats,
-    newChat
+    newChat,
+    getMessages,
+    newMessage
 }
