@@ -59,7 +59,7 @@ export default function Login(){
             {!login && <div className="text-center text-5xl mt-6">Sign-Up:</div>}
             <form onSubmit={handleSubmit} className="w-80 p-10 pt-5 text-center pb-3">
                 <label className="text-xl block p-3" htmlFor="username">Username:</label>
-                <input className="border rounded-lg w-full p-2 text-2xl text-center" type="text" name="username" id="username" placeholder="amarabante"/>
+                <input className="border rounded-lg w-full p-2 text-2xl text-center" type="text" name="username" id="username" placeholder="andrew"/>
                 <label className='text-xl block p-2' htmlFor="password">Password:</label>
                 <input className="border rounded-lg w-full p-2 text-2xl text-center mb-5" type="text" name="password" id="password" placeholder="password" />
                 <div className="flex ">

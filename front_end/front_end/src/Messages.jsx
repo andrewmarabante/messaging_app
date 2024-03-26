@@ -13,7 +13,39 @@ export default function Messages(){
 
     function addNewChat(){
         setNewChat(true)
-        console.log('newchat')
+    }
+
+    function toggleNewMessage(){
+        setNewChat(false)
+    }
+
+    function createChat(chatIds, groupName){
+
+        if(chatIds.length === 0)
+        {
+            return
+        }
+        
+        if(chatIds.length === 1)
+        {
+            groupName = 'default'
+        }
+        const data = {
+            chatIds : chatIds,
+            groupName : groupName
+        }
+
+        fetch('http://localhost:3000/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            credentials: 'include'
+        })
+            .then(result => result.json())
+            .then(result => setNewChat(false))
+            .catch(err => console.log(err))
     }
 
     return(
@@ -23,14 +55,14 @@ export default function Messages(){
             <div className="h-4/5 bg-blue-50 rounded-lg w-3/4 shadow-2xl relative flex justify-center items-center flex-col">
 
                     {!newChat && <>
-                    <div className="text-center p-5 text-5xl">Messages</div>
+                    <div className="text-center p-5 text-5xl select-none">Messages</div>
                     <ChatList></ChatList>
                     <div onClick={addNewChat} className="absolute right-10 bottom-10 h-15 bg-white p-4 flex justify-center items-center rounded-full shadow-lg border text-black">
                         <img src={newMessage} className="h-10"></img>
                     </div>
                     </>}
 
-                    {newChat && <NewChat></NewChat>} 
+                    {newChat && <NewChat toggleNewMessage={toggleNewMessage} createChat={createChat} ></NewChat>} 
             </div>
         </div>
     </div>

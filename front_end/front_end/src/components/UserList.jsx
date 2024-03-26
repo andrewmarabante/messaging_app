@@ -77,9 +77,9 @@ export default function UserList({ title, type, reset, triggerReset, addChat}) {
                 return(
                     <div key={v4()} className=" text-black shadow-sm font-mono text-md p-2 flex justify-between">
                         <div className="">{friend.username}</div>
-                        {type === 'chat' && <img src={plus} alt="plus" className="h-5" onClick={()=>{addChat(friend)}}/>}
-                        {type==='friends' && <img src={trashCan} alt="delete" className="h-4 fill-red-500 text-red-500" onClick={()=>{deleteFriend(friend._id)}}/>} 
-                        {type === 'suggested' && <img src={plus} alt="plus" className="h-5" onClick={()=>{addFriend(friend._id)}}/>}
+                        {type === 'chat' && <img src={plus} alt="plus" className="h-5 hover:bg-blue-100" onClick={()=>{addChat(friend)}}/>}
+                        {type==='friends' && <img src={trashCan} alt="delete" className="h-4 fill-red-500 text-red-500 hover:bg-red-100" onClick={()=>{deleteFriend(friend._id)}}/>} 
+                        {type === 'suggested' && <img src={plus} alt="plus" className="h-5 hover:bg-blue-100" onClick={()=>{addFriend(friend._id)}}/>}
                     </div>
                 )
             })}</div>}
@@ -88,8 +88,8 @@ export default function UserList({ title, type, reset, triggerReset, addChat}) {
                 return(
                     <div key={v4()} className=" text-black shadow-sm font-mono text-md p-2 flex justify-between">
                         <div className="">{friend.username}</div>
-                        {type==='friends' && <img src={trashCan} alt="delete" className="h-4 fill-red-500 text-red-500" onClick={()=>{deleteFriend(friend._id)}}/>} 
-                        {type === 'suggested' && <img src={plus} alt="plus" className="h-5" onClick={()=>{addFriend(friend._id)}}/>}
+                        {type==='friends' && <img src={trashCan} alt="delete" className="h-4 fill-red-500 text-red-500 hover:bg-red-100" onClick={()=>{deleteFriend(friend._id)}}/>} 
+                        {type === 'suggested' && <img src={plus} alt="plus" className="h-5 hover:bg-blue-100" onClick={()=>{addFriend(friend._id)}}/>}
                     </div>
                 )
             })}</div>}

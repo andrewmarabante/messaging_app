@@ -6,4 +6,6 @@ const auth = require('../auth')
 
 router.get('/', auth.authenticateToken, messageControllers.getChats)
 
+router.post('/', auth.authenticateToken, messageControllers.newChat)
+
 module.exports = router;

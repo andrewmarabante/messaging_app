@@ -23,11 +23,11 @@ export default function ChatList(){
     }
 
     return(
-        <div className="bg-white w-4/5 rounded-lg h-3/4 text-center pt-5 shadow-sm">
+        <div className="bg-white w-4/5 rounded-lg h-3/4 text-center pt-5 shadow-lg overflow-scroll select-none border text-black">
             {chats.map((chat)=>{
                 return(
-                    <div className="rounded border text-black ml-10 mr-10 pt-4 pb-4 overflow-scroll" onClick={enterChat} key={v4()}>
-                        <div>{chat.users}</div>
+                    <div className="rounded border text-black ml-10 mr-10 pt-4 pb-4 overflow-scroll mb-5 hover:bg-blue-50" onClick={enterChat} key={v4()}>
+                        <div>{chat.chat_name}</div>
                     </div>
                 )
             })}
