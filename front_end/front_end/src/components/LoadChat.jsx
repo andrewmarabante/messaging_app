@@ -40,6 +40,9 @@ export default function LoadChat({chatId, toggleLoadChat, triggerReset}){
     },[])
 
     function handleTextChange(e){
+        if(e.nativeEvent.inputType === 'insertLineBreak'){
+            sendMessage()
+        }
         setMessage(e.target.value)
     }
 
@@ -100,7 +103,6 @@ export default function LoadChat({chatId, toggleLoadChat, triggerReset}){
         })
         .then(result => result.json())
             .then(result => {
-                console.log(result)
                 setTimeout(() => getMessages(), 100)
             })
             .catch(err => console.log(err))
