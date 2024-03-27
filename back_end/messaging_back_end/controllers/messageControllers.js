@@ -56,15 +56,24 @@ function newChat(req,res){
 }
 
 function getMessages(req,res){
-    console.log('params:')
-    console.log(req.params.id)
-    res.json()
+
+    chatId = req.params.id
+    userId = req.userInfo.userId
+
+    Message.find({chat_id : chatId})
+    .then(result => {
+        result.push(userId)
+        res.status(200).json(result)})
+    .catch(err => res.status(500).json(err))
 }
 
 function newMessage(req,res){
+
+    console.log(req.body.message)
     messageDetails = {
         chat_id : req.params.id,
-        sender : req.userInfo.userId
+        sender : req.userInfo.userId,
+        body : req.body.message
     }
 
      const newMessage = new Message(messageDetails);
