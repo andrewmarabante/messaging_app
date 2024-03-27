@@ -93,7 +93,7 @@ export default function LoadChat({chatId, toggleLoadChat, triggerReset}){
             messageId : messageId
         }
 
-        fetch('http://localhost:3000/messages', {
+        fetch('http://localhost:3000/messages/deleteMessage', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

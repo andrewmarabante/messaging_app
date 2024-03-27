@@ -19,7 +19,6 @@ function getChats(req,res){
         }
         User.find({_id : {$in : ids}})
         .then((users) => {
-            console.log(result)
             users.forEach((user)=>{
                 result.forEach((chat) =>{
                     if(chat.users.includes(user._id) && chat.users.length === 1)
@@ -27,7 +26,6 @@ function getChats(req,res){
                         chat.chat_name = user.username
                     }
                 })
-                console.log(result)
             })
             res.status(200).json(result)
         })
@@ -60,6 +58,7 @@ function getMessages(req,res){
     chatId = req.params.id
     userId = req.userInfo.userId
 
+    console.log(chatId)
     Message.find({chat_id : chatId})
     .then(result => {
         result.push(userId)
@@ -69,7 +68,6 @@ function getMessages(req,res){
 
 function newMessage(req,res){
 
-    console.log(req.body.message)
     messageDetails = {
         chat_id : req.params.id,
         sender : req.userInfo.userId,
@@ -93,10 +91,23 @@ function deleteMessage(req,res){
     .catch(err => res.status(500).json(err))
 }
 
+function deleteChat(req,res){
+    //Yeah So I guess when I sent the params in before, it included the colon, I don't want
+    //to go back and change all that jazz. so I'ma just add it in here and call it a day.
+    chatId = req.body.chatId;
+    Chat.findByIdAndDelete({ _id : chatId })
+    .then(
+        Message.deleteMany({chat_id : ':'+chatId})
+        .then(result => {
+            res.status(200).json('Deleted')}))
+        .catch(err => {res.status(500).json(err)})
+}
+
 module.exports = {
     getChats,
     newChat,
     getMessages,
     newMessage,
-    deleteMessage
+    deleteMessage,
+    deleteChat
 }

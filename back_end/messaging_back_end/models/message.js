@@ -14,6 +14,7 @@ const messageSchema = new Schema({
         type : String,
         required : true
     }
+    
 }, {timestamps: true})
 
 const Message = new mongoose.model('Message', messageSchema);

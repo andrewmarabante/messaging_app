@@ -71,7 +71,7 @@ export default function Messages(){
                     {!newChat && !showChat && <>
                     <div className="text-center p-5 text-5xl select-none">Messages</div>
                     <ChatList enterChat = {enterChat}></ChatList>
-                    <div onClick={addNewChat} className="absolute right-10 bottom-10 h-15 bg-white p-4 flex justify-center items-center rounded-full shadow-lg border text-black">
+                    <div onClick={addNewChat} className="absolute right-10 bottom-10 h-15 bg-white p-4 flex justify-center items-center rounded-full shadow-lg border text-black z-20">
                         <img src={newMessage} className="h-10"></img>
                     </div>
                     </>}
