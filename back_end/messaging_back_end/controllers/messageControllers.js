@@ -84,9 +84,19 @@ function newMessage(req,res){
 
 }
 
+function deleteMessage(req,res){
+    messageId = req.body.messageId;
+
+    Message.findByIdAndDelete({_id:messageId})
+    .then(result => {
+        res.status(200).json('Deleted')})
+    .catch(err => res.status(500).json(err))
+}
+
 module.exports = {
     getChats,
     newChat,
     getMessages,
-    newMessage
+    newMessage,
+    deleteMessage
 }

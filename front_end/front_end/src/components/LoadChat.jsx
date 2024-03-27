@@ -2,12 +2,15 @@ import { useEffect, useState } from "react"
 import send from '../assets/send.svg'
 import back from '../assets/back.svg'
 import { v4 } from "uuid"
+import trash from '../assets/trash.svg'
 
 export default function LoadChat({chatId, toggleLoadChat, triggerReset}){
     const [message, setMessage] = useState('')
     const [chatMessages, setChatMessages] = useState(null)
     const [reset, setReset] = useState('')
-    const [userId, setUserId] = useState(null)
+    const [userId, setUserId] = useState(null);
+    const [showDelete, setShowDelete] = useState(false)
+    let timer;
 
     function getMessages(){
         const cacheBuster = Math.random();
@@ -20,7 +23,6 @@ export default function LoadChat({chatId, toggleLoadChat, triggerReset}){
         })
             .then(result => result.json())
             .then(messages =>{
-                console.log(messages)
                 setUserId(messages[messages.length-1])
                 messages.pop()
                 setChatMessages(messages)
@@ -34,7 +36,6 @@ export default function LoadChat({chatId, toggleLoadChat, triggerReset}){
     }
 
     useEffect(()=> {
-        console.log('working')
         getMessages();
     },[])
 
@@ -69,13 +70,51 @@ export default function LoadChat({chatId, toggleLoadChat, triggerReset}){
             .catch(err => console.log(err))
     }
 
+    function handleMouseDown(){
+        timer = setTimeout(()=>{setShowDelete(true)}, 500)
+    }
+
+    function handleMouseUp(){
+        clearTimeout(timer)
+    }
+
+    function closeDelete(e){
+        if(showDelete && e.target.alt !== 'delete'){
+            setShowDelete(false)
+        }
+    }
+
+    function handleDelete(messageId){
+        
+        const data = {
+            messageId : messageId
+        }
+
+        fetch('http://localhost:3000/messages', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            credentials: 'include'
+        })
+        .then(result => result.json())
+            .then(result => {
+                console.log(result)
+                setTimeout(() => getMessages(), 100)
+            })
+            .catch(err => console.log(err))
+
+    }
     return(
-        <div className="h-5/6 w-10/12 bg-white shadow-lg rounded-2xl p-5 flex flex-col ">
+        <div onClick={closeDelete} className="h-5/6 w-10/12 bg-white shadow-lg rounded-2xl p-5 flex flex-col ">
             <div className="border rounded-2xl text-black h-full w-full mb-2 relative overflow-scroll pb-5 overflow-y-auto" id="messageContainer">
                 {chatMessages && chatMessages.map(message => {
                     return(
                     <div key={v4()} className={`flex p-0 ${message.sender === userId ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`border rounded-md text-black p-3 mr-5 ml-5 mt-5 w-fit max-w-60 shadow-md ${message.sender === userId ? 'bg-green-100' : 'bg-gray-50'}`}>{message.body}</div>
+                        <div className={`relative border rounded-md text-black p-3 mr-5 ml-5 mt-5 w-fit max-w-60 shadow-md select-none ${message.sender === userId ? 'bg-green-100 hover:bg-green-200' : 'bg-gray-50 hover:bg-gray-100'}`} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>{message.body}
+                       {showDelete && <img src={trash} alt="delete" className="h-5 bg-white rounded-full border p-0.5 absolute -top-2 -right-2 hover:bg-red-200" onClick={()=>handleDelete(message._id)}></img>}
+                        </div>
                     </div>)
                 })}
             </div>

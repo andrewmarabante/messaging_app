@@ -8,6 +8,8 @@ router.get('/', auth.authenticateToken, messageControllers.getChats)
 
 router.post('/', auth.authenticateToken, messageControllers.newChat)
 
+router.delete('/', auth.authenticateToken, messageControllers.deleteMessage)
+
 router.get('/:id', auth.authenticateToken, messageControllers.getMessages)
 
 router.post('/:id', auth.authenticateToken, messageControllers.newMessage)
