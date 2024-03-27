@@ -26,7 +26,7 @@ function getSuggested(req, res){
     User.find({_id:userId})
     .then((result) => {
         friendList = result[0].friends;
-        User.find({_id: {$nin : friendList}})
+        User.find({_id: {$nin : friendList, $ne: userId}})
         .then(result => res.status(200).json(result))
         .catch(err => res.status(500).json(err))
     })
